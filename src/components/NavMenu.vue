@@ -21,7 +21,7 @@
 
         <el-submenu index="2">
           <template slot="title">
-            <i class="el-icon-price-tag"></i>
+            <i class="el-icon-goods"></i>
             <span slot="title">Product Detail</span>
           </template>
           <el-menu-item-group title="Product Management">          
@@ -31,13 +31,13 @@
         </el-submenu>
         <el-menu-item index="/tagStatus" @click="goTo('/tagStatus')">
             <template slot="title">
-              <i class="el-icon-plus"></i>
+              <i class="el-icon-s-marketing"></i>
               <span slot="title">EPC Monitoring</span>
             </template>
         </el-menu-item>
          <el-menu-item index="/tagPosition" @click="goTo('/tagPosition')">
             <template slot="title">
-              <i class="el-icon-plus"></i>
+              <i class="el-icon-video-camera"></i>
               <span slot="title">EPC Managment</span>
             </template>
         </el-menu-item>

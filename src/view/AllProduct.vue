@@ -27,7 +27,7 @@
           </el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope.row.orderNum)">Delete
           </el-button>
-          <el-button size="mini" type="info" @click="handleShowQrCode(scope.$index, scope.row)">Show QR code
+          <el-button size="mini" type="info" @click="handleShowQrCode(scope.row)">Show QR code
           </el-button>
         </template>
       </el-table-column>
@@ -72,6 +72,13 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+
+    <el-dialog title="product QR code" :visible.sync="imgVisible" width="25%" center>
+      <el-image
+      style="width: 150px; height: 150px; margin: 0 auto;" 
+      :src="url"
+      :fit="scale-down"></el-image>
+    </el-dialog>
   </div>
 </template>
 
@@ -82,8 +89,10 @@
     data () {
       return {
         editVisible: false,
+        imgVisible: false,
         disabledController: false,
         allProduct: [],
+        url:'',
         ruleForm: {
           orderNum: '',
           name: '',
@@ -131,6 +140,12 @@
         _this.ruleForm = rowData
         _this.disabledController = true
       },
+      handleShowQrCode (rowData) {
+        let _this = this
+        _this.imgVisible = true
+        //_this.url = rowData.qrUrl
+        _this.disabledController = true
+      },
       addNew () {
        this.$router.replace("/addProduct")
         
@@ -140,7 +155,7 @@
         _this.$axios.post('/delete-product', orderNum)
         .then(res => {
           console.log(res)
-         // _this.$router.replace('/allProduct')
+          _this.$router.replace('/allProduct')
           _this.$message.success('delete success!')
           _this.allProduct.splice(index,1)
         })
