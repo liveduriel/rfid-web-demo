@@ -25,6 +25,7 @@ const router = new Router({
       children: [
         {
           path: '/addProduct',
+
           name: 'addProduct',
           component: AddProduct
         },

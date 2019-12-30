@@ -1,5 +1,19 @@
 <template>
   <div class="container">
+    <el-card>
+       <el-upload
+      class="upload-demo"
+      ref="upload"
+      accept=".xls,.xlsx"
+      action="https://jsonplaceholder.typicode.com/posts/"
+      :on-change="upload"
+      :show-file-list="false"
+      :auto-upload="false">
+      <el-button size="small" type="primary">Click to upload</el-button>
+    </el-upload>
+      
+    </el-card>
+   
     <div class="formWrapper">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="auto" class="demo-ruleForm"
                style="width: 50%; margin:0 auto;">
@@ -44,6 +58,7 @@
   </div>
 </template>
 <script>
+  import XLSX from 'xlsx'
   export default {
     data () {
       return {
@@ -109,8 +124,63 @@
       },
       resetForm (formName) {
         this.$refs[formName].resetFields()
-      }
+      },
+      upload(file,fileList){
+        let files = {0:file.raw}
+        console.log(files)
+        this.readExcel(files);
+      },
+      readExcel(files) {//表格导入
+        let that = this
+        console.log("11"+files);
+        if(files.length<=0){//如果没有文件名
+            return false;
+        }else if(!/\.(xls|xlsx)$/.test(files[0].name.toLowerCase())){
+            this.$Message.error('上传格式不正确，请上传xls或者xlsx格式');
+            return false;
+        }
+    
+        const fileReader = new FileReader();
+        fileReader.onload = (ev) => {
+          try {
+            const data = ev.target.result;
+            
+            const workbook = XLSX.read(data, {
+              type: 'binary'
+            });
+            const wsname = workbook.SheetNames[0];//取第一张表
+            const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]);//生成json表格内容
+            console.log("111"+ws);
+            try{
+              for (let i = 0; i < ws.length; i++) {
+                let str=ws[i].保质期
+                str=str.substring(0,str.length-1)
 
+                var result = {
+                  orderNum: ws[i].生产单号,
+                  name: ws[i].产品名称,
+                  inventory: ws[i].生产数量,
+                  expiration: parseInt(str),
+                  productionDate: ws[i].生产时间,
+                  specification: ws[i].产品规格,
+                  qrUrl: ws[i].二维码路径
+                }
+                
+              }
+              console.log(result)
+              that.ruleForm=result;
+
+            }catch(err){
+              console.log(err)
+            }
+            this.$refs.upload.value = '';
+          } catch (e) {
+            console.log("errrr")
+            return false;
+          }
+        };
+        fileReader.readAsBinaryString(files[0]);
+      }
     }
   }
 </script>

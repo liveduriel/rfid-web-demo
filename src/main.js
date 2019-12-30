@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
 // import Mock from './mock/index'
 import axios from 'axios'
+import XLSX from 'xlsx'
 
 
 axios.defaults.baseURL = 'http://localhost:8081/rfid'
