@@ -42,7 +42,15 @@
           <div>( {{scope.row.loc.x}} , {{scope.row.loc.y}} )</div>    
         </template>
       </el-table-column>
-      <el-table-column  prop="status" label="Status"  >
+      <el-table-column  prop="status" label="Status">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.change|statusFilter">{{scope.row.status}}</el-tag>    
+        </template>
+      </el-table-column>
+       <el-table-column  prop="lastStatus" label="Status in the previous Timeslot">
+         <template slot-scope="scope1">
+          <el-tag >{{scope1.row.lastStatus}}</el-tag>    
+        </template>
       </el-table-column>
     </el-table>
 
@@ -159,12 +167,24 @@
           _this.readers=res.data.readers 
           _this.slot=res.data.slot
           _this.tags=res.data.tags
+
+          console.log(_this.tags)
         })
         },10000);
       }
     },
     beforeDestroy(){
       clearInterval(this.timer);
+    },
+    filters:{
+      statusFilter(status){
+        const statusMap ={
+          0: '',
+          1: 'success',
+          2:'danger'
+        }
+        return statusMap[status]
+      }
     },
     methods: {
       handleEdit (rowData) {

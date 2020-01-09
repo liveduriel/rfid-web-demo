@@ -3,7 +3,7 @@
     <div class="formWrapper">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="auto" class="demo-ruleForm"
                style="width: 50%; margin:0 auto;">
-        <el-form-item label="OrderNum" prop="epc">
+        <el-form-item label="EPC code" prop="epc">
           <el-input v-model ="ruleForm.epc" placeholder="please input the epc number"></el-input>
         </el-form-item>
         <el-form-item label="password">

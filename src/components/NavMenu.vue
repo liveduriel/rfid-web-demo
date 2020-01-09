@@ -10,6 +10,17 @@
 
           <el-submenu index="1">
           <template slot="title">
+            <i class="el-icon-goods"></i>
+            <span slot="title">Product Detail</span>
+          </template>
+          <el-menu-item-group title="Product Management">          
+            <el-menu-item index="/allProduct"  @click="goTo('/allProduct')">Product List</el-menu-item>
+            <el-menu-item index="/addProduct" @click="goTo('/addProduct')">Add Product</el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+
+          <el-submenu index="2">
+          <template slot="title">
             <i class="el-icon-price-tag"></i>
             <span slot="title">EPC Management</span>
           </template>
@@ -19,16 +30,7 @@
           </el-menu-item-group>
         </el-submenu>
 
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-goods"></i>
-            <span slot="title">Product Detail</span>
-          </template>
-          <el-menu-item-group title="Product Management">          
-            <el-menu-item index="/allProduct"  @click="goTo('/allProduct')">Product List</el-menu-item>
-            <el-menu-item index="/addProduct" @click="goTo('/addProduct')">Add Product</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+        
         <el-menu-item index="/tagStatus" @click="goTo('/tagStatus')">
             <template slot="title">
               <i class="el-icon-s-marketing"></i>
